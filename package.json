@@ -1,0 +1,16 @@
+{
+  "name": "icloud",
+  "version": "0.0.1",
+  "description": "Access the iCloud API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Weis <weis.john@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "node-uuid": "^1.4.1",
+    "request": "^2.45.0"
+  }
+}
