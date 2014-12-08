@@ -1,6 +1,6 @@
 {
   "name": "icloud",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Access the iCloud API",
   "main": "index.js",
   "scripts": {

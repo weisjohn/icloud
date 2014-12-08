@@ -24,7 +24,7 @@ module.exports = function() {
             'referer' : conf.home,
             'User-Agent': 'Opera/9.52 (X11; Linux i686; U; en)'
         },
-        jar : true,
+        jar : request.jar(),
         json : true
     });
 
