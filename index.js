@@ -119,7 +119,7 @@ module.exports = function() {
     }
         
     // fetch events
-    function events(from,to,timezone,cb) {
+    function events(from,to,timezone,startup, cb) {
         if (!session.webservices || !session.webservices.calendar)
             return cb("No webservice found for calendars");
 
@@ -131,9 +131,10 @@ module.exports = function() {
         });
 
         var url = session.webservices.calendar.url.replace(':443', '');
+        var urlpath = (startup ? 'startup' : 'events');
 
         req.get({
-            url : session.webservices.calendar.url + "/ca/events",
+            url : session.webservices.calendar.url + "/ca/" + urlpath,
             qs : params,
             headers : {
                 host : session.webservices.calendar.url.split('//')[1].split(':')[0],
