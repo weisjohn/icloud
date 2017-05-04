@@ -105,7 +105,7 @@ module.exports = function() {
         });
 
         var url = session.webservices.contacts.url.replace(':443', '');
-
+        
         req.get({
             url : session.webservices.contacts.url + "/co/startup",
             qs : params,
@@ -117,10 +117,63 @@ module.exports = function() {
             cb(null, body);
         });
     }
+        
+    // fetch events
+    function events(from,to,timezone,startup, cb) {
+        if (!session.webservices || !session.webservices.calendar)
+            return cb("No webservice found for calendars");
+
+        var params = _.extend({}, session.params, {
+            lang: 'en-us',
+            usertz: timezone,
+            startDate: from,
+            endDate: to
+        });
+
+        var url = session.webservices.calendar.url.replace(':443', '');
+        var urlpath = (startup ? 'startup' : 'events');
+
+        req.get({
+            url : session.webservices.calendar.url + "/ca/" + urlpath,
+            qs : params,
+            headers : {
+                host : session.webservices.calendar.url.split('//')[1].split(':')[0],
+            }
+        }, function(err, resp, body) {
+            if (err) return cb(err);
+            cb(null, body);
+        });
+    }
+    
+    // fetch event details
+    function event(calId,eventId,timezone,cb) {
+        if (!session.webservices || !session.webservices.calendar)
+            return cb("No webservice found for calendars");
+
+        var params = _.extend({}, session.params, {
+            lang: 'en-us',
+            usertz: timezone
+        });
+
+        var url = session.webservices.calendar.url.replace(':443', '');
+
+        req.get({
+            url : session.webservices.calendar.url + "/ca/eventdetail/" + calId + "/" + eventId,
+            qs : params,
+            headers : {
+                host : session.webservices.calendar.url.split('//')[1].split(':')[0],
+            }
+        }, function(err, resp, body) {
+            if (err) return cb(err);
+            cb(null, body);
+        });
+    }
 
     return {
         login: login,
-        contacts:  contacts
+        contacts:  contacts,
+        events:  events,
+        event:  event
     }
 
 }
